@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rick and Morty - Portal de Personagens</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Rick and Morty</h1>
+        <p>Lista de Personagens - Explore o Multiverso 🧪🥼</p>
+    </header>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar personagem...">
+            <span class="search-icon">🔍</span>
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="Alive">Vivos</button>
+            <button class="filter-btn" data-filter="Dead">Mortos</button>
+            <button class="filter-btn" data-filter="unknown">Desconhecido</button>
+        </div>
+    </div>
+
+    <div class="stats">
+        Mostrando <span id="characterCount">0</span> personagens
+    </div>
+
+    <div class="container">
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Carregando personagens do multiverso...</p>
+        </div>
+        <div id="cards-container" class="cards-grid"></div>
+        <div class="load-more" id="loadMoreContainer">
+            <button class="load-more-btn" id="loadMoreBtn">Carregar Mais Personagens</button>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="">
+            <div class="modal-body">
+                <h2 id="modalTitle" class="modal-title"></h2>
+                <div id="modalInfo"></div>
+                <div id="modalEpisodes" class="episodes-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Dados obtidos em tempo real da API Rick and Morty</p>
+        <p>&copy; 2025 - Projeto Front-End Development</p>
+        <p>Feito por Kauã Simplício | Ciência da Computação | UniFECAF</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
