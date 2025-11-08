@@ -1,4 +1,3 @@
-
 const apiUrl = 'https://rickandmortyapi.com/api/character';
 const cardsContainer = document.getElementById('cards-container');
 const loadingElement = document.getElementById('loading');
@@ -76,17 +75,17 @@ function openModal(character) {
 
     const modalInfo = document.getElementById('modalInfo');
     modalInfo.innerHTML = `
-                <div class="modal-info">
-                    <strong>Status:</strong>
-                    <span class="status ${character.status.toLowerCase()}">
-                        ${character.status === 'Alive' ? 'Vivo' : character.status === 'Dead' ? 'Morto' : 'Desconhecido'}
-                    </span>
-                </div>
-                <div class="modal-info"><strong>Espécie:</strong> ${character.species}</div>
-                <div class="modal-info"><strong>Gênero:</strong> ${character.gender}</div>
-                <div class="modal-info"><strong>Origem:</strong> ${character.origin.name}</div>
-                <div class="modal-info"><strong>Localização:</strong> ${character.location.name}</div>
-            `;
+        <div class="modal-info">
+            <strong>Status:</strong>
+            <span class="status ${character.status.toLowerCase()}">
+                ${character.status === 'Alive' ? 'Vivo' : character.status === 'Dead' ? 'Morto' : 'Desconhecido'}
+            </span>
+        </div>
+        <div class="modal-info"><strong>Espécie:</strong> ${character.species}</div>
+        <div class="modal-info"><strong>Gênero:</strong> ${character.gender}</div>
+        <div class="modal-info"><strong>Origem:</strong> ${character.origin.name}</div>
+        <div class="modal-info"><strong>Localização:</strong> ${character.location.name}</div>
+    `;
 
     const episodesList = document.getElementById('modalEpisodes');
     episodesList.innerHTML = '<h3>Episódios Aparecidos:</h3>';
@@ -135,9 +134,19 @@ function filterCharacters() {
     characterCount.textContent = filteredCharacters.length;
 }
 
-searchInput.addEventListener('input', (e) => {
-    currentSearch = e.target.value;
-    filterCharacters();
+searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        currentSearch = e.target.value.trim();
+        console.log(`🔍 Buscando personagem: "${currentSearch}"...`);
+
+        filterCharacters();
+
+        if (filteredCharacters.length > 0) {
+            console.log(`✅ Sucesso! ${filteredCharacters.length} personagem(ns) encontrado(s).`);
+        } else {
+            console.log('❌ Nenhum personagem encontrado com esse nome.');
+        }
+    }
 });
 
 filterBtns.forEach(btn => {
@@ -153,9 +162,13 @@ function loadCharacters(page = 1) {
     loadingElement.style.display = 'block';
     loadMoreBtn.disabled = true;
 
+    console.log(`🔄 Buscando personagens da página ${page}...`);
+
     fetch(`${apiUrl}?page=${page}`)
         .then(response => response.json())
         .then(data => {
+            console.log("✅ Dados recebidos da API:", data);
+
             loadingElement.style.display = 'none';
 
             allCharacters = [...allCharacters, ...data.results];
@@ -168,12 +181,13 @@ function loadCharacters(page = 1) {
             }
 
             filterCharacters();
+
             loadMoreBtn.disabled = false;
         })
         .catch(error => {
             loadingElement.innerHTML = '<p>Erro ao carregar personagens. Tente novamente.</p>';
             loadMoreBtn.disabled = false;
-            console.error('Erro:', error);
+            console.error('❌ Erro ao carregar personagens:', error);
         });
 }
 
